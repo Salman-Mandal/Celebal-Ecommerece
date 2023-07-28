@@ -2,9 +2,11 @@ const express = require("express");
 const app = express();
 const errorMiddleware = require("./middleware/error");
 const cookie = require("cookie-parser");
+const cors = require('cors');
 
 app.use(express.json());
 app.use(cookie());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 // Route Imports
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoutes");
