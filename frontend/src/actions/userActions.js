@@ -12,7 +12,7 @@ export const register = (userData) => async (dispatch) => {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
-    const { data } = await axios.post(`http://localhost:5000/api/v1/register`, userData, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URI}/register`, userData, config);
 
     dispatch({
       type: REGISTER_USER_SUCCESS, payload: data.user
@@ -38,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/login`,
+      `${process.env.REACT_APP_BACKEND_URI}/login`,
       { email, password },
       config
     );
@@ -57,7 +57,7 @@ export const loadUser = () => async (dispatch) => {
       withCredentials: true, // Send cookies with the request
     };
 
-    const { data } = await axios.get(`http://localhost:5000/api/v1/me`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/me`, config);
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
@@ -74,7 +74,7 @@ export const logout = () => async (dispatch) => {
       withCredentials: true,
     };
 
-   await axios.get(`http://localhost:5000/api/v1/logout`, config);
+   await axios.get(`${process.env.REACT_APP_BACKEND_URI}/logout`, config);
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {

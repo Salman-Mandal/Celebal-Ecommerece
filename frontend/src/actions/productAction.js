@@ -10,8 +10,8 @@ export const getProduct =
             try {
                 dispatch({ type: ALL_PRODUCT_REQUEST });
 
-                // let link = `http://localhost:5000/api/v1/products`;
-                let link = `http://localhost:5000/api/v1/products?&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+                // let link = `${process.env.REACT_APP_BACKEND_URI}/products`;
+                let link = `${process.env.REACT_APP_BACKEND_URI}/products?&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
 
                 const { data } = await axios.get(link);
 
@@ -32,7 +32,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`http://localhost:5000/api/v1/products/${id}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/products/${id}`);
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
