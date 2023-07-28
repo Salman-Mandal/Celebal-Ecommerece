@@ -12,10 +12,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
+import { Link, useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 const pages = [
-  { label: 'Home', path: '/home' },
+  { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
   { label: 'Contact', path: '/contact' },
   { label: 'About', path: '/about' },
@@ -41,6 +42,8 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const { isLoggedIn, user } = useSelector((state) => state.user);
 
   return (
     <AppBar position="static">
@@ -137,7 +140,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={isLoggedIn?user.avater.url:"jajb"} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -161,6 +164,8 @@ function Header() {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+
+
             </Menu>
           </Box>
         </Toolbar>
