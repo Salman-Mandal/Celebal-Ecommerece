@@ -31,16 +31,16 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/login" element={<LoginSignUp />} />
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<LoginSignUp />} />
-          {isLoggedIn && user && <Route path="/account" element={<Profile user={user} />} />}
-          <Route path="/products" element={<Products/>} />
+          <Route path="/account" element={<Profile />} />
+          <Route path="/products" element={<Products />} />
         </Routes>
+
       </Router>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

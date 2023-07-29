@@ -41,8 +41,8 @@ const LoginSignUp = ({ location }) => {
     const [avatar, setAvatar] = useState("/Profile.png");
     const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
-
     const loginSubmit = (e) => {
+        
         e.preventDefault();
         dispatch(login(loginEmail, loginPassword));
     };

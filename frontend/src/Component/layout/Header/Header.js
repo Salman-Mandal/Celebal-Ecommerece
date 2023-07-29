@@ -13,7 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, useNavigate } from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { logout } from '../../../actions/userActions';
 
 const pages = [
   { label: 'Home', path: '/' },
@@ -21,7 +22,7 @@ const pages = [
   { label: 'Contact', path: '/contact' },
   { label: 'About', path: '/about' },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -44,6 +45,7 @@ function Header() {
   };
 
   const { isLoggedIn, user } = useSelector((state) => state.user);
+  const dispatch=useDispatch();
 
   return (
     <AppBar position="static">
@@ -159,13 +161,28 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => navigate(`/${setting.toLowerCase()}`)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              <MenuItem key="Profile" onClick={() => navigate(`/profile`)}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
 
+              <MenuItem key="Account" onClick={() => navigate(`/account`)}>
+                  <Typography textAlign="center">Account</Typography>
+                </MenuItem>
 
+              <MenuItem key="Dashboard" onClick={() => navigate(`/dashboard`)}>
+                  <Typography textAlign="center">Dashboard</Typography>
+                </MenuItem>
+
+              <MenuItem key="Logout" onClick={() => {
+                dispatch(logout());
+              }}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

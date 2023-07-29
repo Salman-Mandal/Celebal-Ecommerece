@@ -20,7 +20,7 @@ export const register = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -29,8 +29,6 @@ export const register = (userData) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-
-    console.log("HI tehere agsfjgh");
 
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -45,7 +43,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
+    dispatch({ type: LOGIN_FAIL, payload: error.message });
   }
 };
 
@@ -61,7 +59,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    dispatch({ type: LOAD_USER_FAIL, payload: error.message });
   }
 };
 export const logout = () => async (dispatch) => {
@@ -74,11 +72,12 @@ export const logout = () => async (dispatch) => {
       withCredentials: true,
     };
 
-   await axios.get(`${process.env.REACT_APP_BACKEND_URI}/logout`, config);
+   await axios.post(`${process.env.REACT_APP_BACKEND_URI}/logout`, config);
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
-    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+    console.log(error);
+    dispatch({ type: LOGOUT_FAIL, payload: error.message });
   }
 };
 

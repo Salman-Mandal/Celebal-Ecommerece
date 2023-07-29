@@ -3,11 +3,11 @@ const app = express();
 const errorMiddleware = require("./middleware/error");
 const cookie = require("cookie-parser");
 const cors = require('cors');
-const bodyParser =require("body-parser");
-const fileUpload=require("express-fileupload");
-const dotenv=require("dotenv");
-dotenv.config({ path: "/.env" });
+const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
+require("dotenv").config();
 
+// console.log(process.env.FRONTEND_URL);
 app.use(express.json());
 app.use(cookie());
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
