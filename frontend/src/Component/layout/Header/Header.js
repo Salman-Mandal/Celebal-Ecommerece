@@ -18,9 +18,10 @@ import { logout } from '../../../actions/userActions';
 
 const pages = [
   { label: 'Home', path: '/' },
-  { label: 'Products', path: '/products' },
+  { label: 'Products', path: '/products/:keyword' },
   { label: 'Contact', path: '/contact' },
   { label: 'About', path: '/about' },
+  { label: 'Cart', path: '/cart' },
 ];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 

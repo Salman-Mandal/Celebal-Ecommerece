@@ -11,7 +11,7 @@ export const getProduct =
                 dispatch({ type: ALL_PRODUCT_REQUEST });
 
                 // let link = `${process.env.REACT_APP_BACKEND_URI}/products`;
-                let link = `${process.env.REACT_APP_BACKEND_URI}/products?&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+                let link = `${process.env.REACT_APP_BACKEND_URI}/products?page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
 
                 const { data } = await axios.get(link);
 

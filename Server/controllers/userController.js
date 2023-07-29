@@ -72,18 +72,18 @@ exports.loginUser = catchAsyncError(
         sendToken(user, res, 200);
     }
 )
-exports.logoutUser = catchAsyncError(
+exports.logoutUser = catchAsyncError(async (req, res, next) => {
+    res.status(200).cookie("token", null, {
+        httpOnly: true,
+        expires: new Date(0), // Set the expiration date to a past date
+        sameSite: "none",
+        secure: true,
+    }).json({
+        success: true,
+        message: "Logged Out Successfully"
+    });
+});
 
-    async (req, res, next) => {
-        res.status(200).cookie("token", null, {
-            httpOnly: true, expires: new Date(Date.now()), sameSite: "none",
-            secure: true,
-        }).json({
-            success: true,
-            message: "LoggedOut Successfully"
-        })
-    }
-)
 
 // Forgot Password
 exports.forgotPassword = catchAsyncError(async (req, res, next) => {

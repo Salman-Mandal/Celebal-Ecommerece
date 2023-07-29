@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import store from "./store";
 import Profile from './Component/User/Profile';
 import Products from './Component/Product/Products';
+import Search from './Component/Product/Search';
+import Cart from './Component/Cart/Cart';
 
 
 
@@ -35,7 +37,9 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<LoginSignUp />} />
           <Route path="/account" element={<Profile />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products/:keyword" element={<Products />} />
+          <Route  path="/search" element={<Search/>} />
+          <Route  path="/cart" element={<Cart/>} />
         </Routes>
 
       </Router>

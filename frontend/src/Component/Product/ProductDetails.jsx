@@ -11,7 +11,7 @@ import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
 // import { useAlert } from "react-alert";
 // import MetaData from "../layout/MetaData";
-// import { addItemsToCart } from "../../actions/cartAction";
+import { addItemsToCart } from "../../actions/cartAction";
 import {
   Dialog,
   DialogActions,
@@ -26,7 +26,7 @@ import { useParams } from "react-router-dom";
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
   // const alert = useAlert();
-  const params=useParams();
+  const params = useParams();
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -35,10 +35,10 @@ const ProductDetails = ({ match }) => {
   // const { success, error: reviewError } = useSelector(
   //   (state) => state.newReview
   // );
-const success=true;
+  const success = true;
   const options = {
     size: "large",
-    value:5|| product.ratings,
+    value: 5 || product.ratings,
     readOnly: true,
     precision: 0.5,
   };
@@ -49,21 +49,21 @@ const success=true;
   const [comment, setComment] = useState("");
 
   const increaseQuantity = () => {
-    // if (product.Stock <= quantity) return;
+    if (product.Stock <= quantity) return;
 
     const qty = quantity + 1;
     setQuantity(qty);
   };
 
   const decreaseQuantity = () => {
-    // if (1 >= quantity) return;
+    if (1 >= quantity) return;
 
     const qty = quantity - 1;
     setQuantity(qty);
   };
 
   const addToCartHandler = () => {
-    // dispatch(addItemsToCart(match.params.id, quantity));
+    dispatch(addItemsToCart(params.id, quantity));
     // alert.success("Item Added To Cart");
     console.log("Item Added To Cart");
   };
@@ -101,7 +101,7 @@ const success=true;
     //   dispatch({ type: NEW_REVIEW_RESET });
     // }
     dispatch(getProductDetails(params.id));
-  }, [dispatch, params.id, error,  success]);
+  }, [dispatch, params.id, error, success]);
 
   console.log(product.images);
 
@@ -126,19 +126,19 @@ const success=true;
                     />
                   ))}
               </Carousel> */}
-              
-                {product.images &&
-                  product.images.map((item, i) => (
-                    
-                    <img
-                      className="CarouselImage"
-                      key={i}
-                      src={item.url}
-                      alt={`${i} Slide`}
-                    />
-                  ))}
-              
-              
+
+              {product.images &&
+                product.images.map((item, i) => (
+
+                  <img
+                    className="CarouselImage"
+                    key={i}
+                    src={item.url}
+                    alt={`${i} Slide`}
+                  />
+                ))}
+
+
 
             </div>
 
@@ -159,7 +159,8 @@ const success=true;
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
-                    <input readOnly type="number" value={1} />
+                    {/* <input readOnly type="number" value={quantity} /> */}
+                    <p>{quantity}</p>
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
