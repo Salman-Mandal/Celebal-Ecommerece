@@ -4,7 +4,7 @@ const User = require("../models/userModels");
 const { sendToken } = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const cloudinary=require("cloudinary");
+const cloudinary = require("cloudinary");
 
 
 //Register a user
@@ -17,10 +17,10 @@ exports.registerUser = catchAsyncError(
             folder: "avaters",
             width: 150,
             crop: "scale",
-          });
+        });
 
-          const public_id = myCloud.public_id;
-    const url = myCloud.secure_url;
+        const public_id = myCloud.public_id;
+        const url = myCloud.secure_url;
 
 
         const user = await User.create({
@@ -75,7 +75,10 @@ exports.loginUser = catchAsyncError(
 exports.logoutUser = catchAsyncError(
 
     async (req, res, next) => {
-        res.status(200).cookie("token", null, { httpOnly: true, expires: new Date(Date.now()) }).json({
+        res.status(200).cookie("token", null, {
+            httpOnly: true, expires: new Date(Date.now()), sameSite: "none",
+            secure: true,
+        }).json({
             success: true,
             message: "LoggedOut Successfully"
         })
