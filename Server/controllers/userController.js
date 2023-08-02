@@ -50,39 +50,56 @@ exports.getUser = catchAsyncError(
     }
 );
 
-exports.loginUser = catchAsyncError(
+exports.loginUser =
     async (req, res, next) => {
 
-        const { email, password } = req.body;
+        try {
+            const { email, password } = req.body;
 
-        if (!email || !password) {
-            return next(new ErrorHandler("Please enter email and password", 400));
+
+            if (!email || !password) {
+                return next(new ErrorHandler("Please enter email and password", 400));
+            }
+            const user = await User.findOne({ email }).select("+password");
+            if (!user) {
+                return next(new ErrorHandler("Invalid email or password"), 401);
+            }
+            const isPassWordMatched = await user.comparePassword(password);
+
+
+            if (!isPassWordMatched) {
+                return next(new ErrorHandler("Invalid email or password"), 401);
+            }
+
+            console.log(user);
+
+            sendToken(user, res, 200, 1);
+
+        } catch (error) {
+            console.log(error);
         }
-        const user = await User.findOne({ email }).select("+password");
-        if (!user) {
-            return next(new ErrorHandler("Invalid email or password"), 401);
-        }
-        const isPassWordMatched = await user.comparePassword(password);
-
-
-        if (!isPassWordMatched) {
-            return next(new ErrorHandler("Invalid email or password"), 401);
-        }
-
-        sendToken(user, res, 200);
     }
-)
-exports.logoutUser = catchAsyncError(async (req, res, next) => {
-    res.status(200).cookie("token", null, {
-        httpOnly: true,
-        expires: new Date(0), // Set the expiration date to a past date
-        sameSite: "none",
-        secure: true,
-    }).json({
-        success: true,
-        message: "Logged Out Successfully"
-    });
-});
+exports.logoutUser =
+    async (req, res, next) => {
+        try {
+            const options = {
+                httpOnly: true,
+                expires: new Date(Date.now())
+            }
+
+            console.log("loggedout successfully");
+
+            res.status(200).cookie("token", null, options).json({
+                success: true,
+                message: "User Loggout Out Successfully"
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
 
 // Forgot Password

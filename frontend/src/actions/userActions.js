@@ -1,26 +1,34 @@
 import axios from 'axios';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, CLEAR_ERROR, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAIL, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from "../constants/userConstants";
 
-
 export const register = (userData) => async (dispatch) => {
   try {
-
-    
     dispatch({ type: REGISTER_USER_REQUEST });
 
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
-    const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URI}/register`, userData, config);
+
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URI}/register`,
+      userData,
+      config
+    );
+
+  
+    document.cookie = `token=${data.token}; expires=${new Date(
+      Date.now() + 5 * 24 * 60 * 60 * 1000
+    )}; path=/;`;
 
     dispatch({
-      type: REGISTER_USER_SUCCESS, payload: data.user
+      type: REGISTER_USER_SUCCESS,
+      payload: data.user,
     });
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.message,
+      payload: error.response.data.error.message,
     });
   }
 };
@@ -32,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const config = {
       headers: { "Content-Type": "application/json" },
-      withCredentials: true, // Include this option to send cookies
+      withCredentials: true, 
     };
 
     const { data } = await axios.post(
@@ -41,9 +49,14 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
+    document.cookie = `token=${data.token}; expires=${new Date(
+      Date.now() + 5 * 24 * 60 * 60 * 1000
+    )}; path=/;`;
+
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOGIN_FAIL, payload: error.message });
+    console.log(error.response.data.error.message);
+    dispatch({ type: LOGIN_FAIL, payload: error.response.data.error.message });
   }
 };
 
@@ -59,7 +72,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAIL, payload: error.message });
+    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.error.message });
   }
 };
 export const logout = () => async (dispatch) => {
@@ -72,12 +85,11 @@ export const logout = () => async (dispatch) => {
       withCredentials: true,
     };
 
-   await axios.post(`${process.env.REACT_APP_BACKEND_URI}/logout`, config);
+    await axios.post(`${process.env.REACT_APP_BACKEND_URI}/logout`, config);
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
-    console.log(error);
-    dispatch({ type: LOGOUT_FAIL, payload: error.message });
+    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.error.message });
   }
 };
 

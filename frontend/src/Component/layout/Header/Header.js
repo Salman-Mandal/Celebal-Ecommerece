@@ -13,8 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, useNavigate } from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
-import { logout } from '../../../actions/userActions';
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser, logout } from '../../../actions/userActions';
+import Cookies from "js-cookie";
 
 const pages = [
   { label: 'Home', path: '/' },
@@ -29,6 +30,13 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate(); // Use useNavigate hook to access the navigate function
+
+  const logOutHandler=async (e) => {
+    e.preventDefault();
+    await Cookies.remove('token')
+    await dispatch(loadUser);
+    window.location.reload(false);
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,7 +54,7 @@ function Header() {
   };
 
   const { isLoggedIn, user } = useSelector((state) => state.user);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   return (
     <AppBar position="static">
@@ -143,7 +151,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={isLoggedIn?user.avater.url:"jajb"} />
+                <Avatar alt="Remy Sharp" src={isLoggedIn ? user.avater.url : "jajb"} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -168,22 +176,20 @@ function Header() {
                 </MenuItem>
               ))} */}
               <MenuItem key="Profile" onClick={() => navigate(`/profile`)}>
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
+                <Typography textAlign="center">Profile</Typography>
+              </MenuItem>
 
               <MenuItem key="Account" onClick={() => navigate(`/account`)}>
-                  <Typography textAlign="center">Account</Typography>
-                </MenuItem>
+                <Typography textAlign="center">Account</Typography>
+              </MenuItem>
 
               <MenuItem key="Dashboard" onClick={() => navigate(`/dashboard`)}>
-                  <Typography textAlign="center">Dashboard</Typography>
-                </MenuItem>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
 
-              <MenuItem key="Logout" onClick={() => {
-                dispatch(logout());
-              }}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
+              <MenuItem key="Logout" onClick={logOutHandler}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

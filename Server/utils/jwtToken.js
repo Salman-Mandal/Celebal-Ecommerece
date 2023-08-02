@@ -2,16 +2,20 @@ exports.sendToken = (user, res, statusCode) => {
 
     const token = user.getJWTToken();
 
-    const options = {
-        httpOnly: true,
-        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-        sameSite: "none",
-        secure: true,
-    };
 
-    res.status(statusCode).cookie("token", token, options).json({
+    // const options = {
+    //     // httpOnly: true,
+    //     expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+    // }
+
+    // res.status(statusCode).cookie("token", token, options).json({
+    //     success: true,
+    //     user,
+    //     token
+    // })
+    res.status(statusCode).json({
         success: true,
         user,
         token
-    });
+    })
 };

@@ -7,20 +7,12 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FaceIcon from '@mui/icons-material/Face';
 import { useDispatch, useSelector } from "react-redux";
 import { clearError, login, register } from '../../actions/userActions';
-
-
-
-
-
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginSignUp = ({ location }) => {
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
-    const { error, loading, isLoggedIn } = useSelector(
-        (state) => state.user
-    );
-
+    const { error, loading, isLoggedIn } = useSelector((state) => state.user);
 
     const loginTab = useRef(null);
     const registerTab = useRef(null);
@@ -35,31 +27,27 @@ const LoginSignUp = ({ location }) => {
         password: "",
     });
 
-
     const { name, email, password } = user;
 
     const [avatar, setAvatar] = useState("/Profile.png");
     const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
     const loginSubmit = (e) => {
-        
         e.preventDefault();
         dispatch(login(loginEmail, loginPassword));
     };
+
     const registerSubmit = (e) => {
         e.preventDefault();
-        console.log("regter submited");
         const myForm = new FormData();
 
         myForm.set("name", name);
         myForm.set("email", email);
         myForm.set("password", password);
         myForm.set("avatar", avatar);
-        console.log(myForm);
+
         dispatch(register(myForm));
     };
-
-
 
     const registerDataChange = (e) => {
         if (e.target.name === "avatar") {
@@ -78,19 +66,20 @@ const LoginSignUp = ({ location }) => {
         }
     };
 
-    // const redirect = location.search ? location.search.split("=")[1] : "/";
-
     useEffect(() => {
         if (error) {
             console.log(error);
+            toast.error(error);
+
             dispatch(clearError());
         }
 
         if (isLoggedIn) {
+            console.log("logged in");
+            toast.success('Successfully toasted!');
             navigate("/");
         }
-    }, [dispatch, error, navigate, isLoggedIn]);
-
+    }, [dispatch, error, isLoggedIn]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {
@@ -111,17 +100,12 @@ const LoginSignUp = ({ location }) => {
 
 
 
-
-
-
-
-
     return (
         <>
             {loading ? (
                 <Loader />
             ) : (
-                < >
+                <Fragment>
                     <div className="LoginSignUpContainer">
                         <div className="LoginSignUpBox">
                             <div>
@@ -207,10 +191,12 @@ const LoginSignUp = ({ location }) => {
                             </form>
                         </div>
                     </div>
-                </>
+                    <Toaster />
+                </Fragment>
             )}
+
         </>
     );
-}
+};
 
-export default LoginSignUp
+export default LoginSignUp;
