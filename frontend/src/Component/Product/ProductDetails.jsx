@@ -22,6 +22,7 @@ import {
 import { Rating } from "@mui/material";
 import { useParams } from "react-router-dom";
 // import { NEW_REVIEW_RESET } from "../../constants/productConstants";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const ProductDetails = ({ match }) => {
   const addToCartHandler = () => {
     dispatch(addItemsToCart(params.id, quantity));
     // alert.success("Item Added To Cart");
-    console.log("Item Added To Cart");
+    toast.success('Successfully added to cart!');
   };
 
   const submitReviewToggle = () => {
@@ -234,6 +235,7 @@ const ProductDetails = ({ match }) => {
           )}
         </Fragment>
       )}
+      <Toaster />
     </Fragment>
   );
 };

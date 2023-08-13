@@ -21,41 +21,11 @@ const Footer = () => {
                             </div>
 
                             <div className="col-lg-3 col-md-6">
-                                <div className="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s">
-                                    <h3 className="f-title f_600 t_color f_size_18">Download</h3>
-                                    <ul className="list-unstyled f_list" style={{ listStyleType: 'none' }}>
-                                        <li>
-                                            <button type="button">Company</button>
-                                        </li>
-                                        <li>
-                                            <button type="button">Android App</button>
-                                        </li>
-                                        <li>
-                                            <button type="button">iOS App</button>
-                                        </li>
-                                    </ul>
-                                </div>
+
                             </div>
 
                             <div className="col-lg-3 col-md-6">
-                                <div className="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s">
-                                    <h3 className="f-title f_600 t_color f_size_18">Help</h3>
-                                    <ul className="list-unstyled f_list" style={{ listStyleType: 'none' }}>
-                                        <li>
-                                            <button type="button">FAQ</button>
-                                        </li>
-                                        <li>
-                                            <button type="button">Term &amp; conditions</button>
-                                        </li>
-                                        <li>
-                                            <button type="button">upport Policy</button>
-                                        </li>
-                                        <li>
-                                            <button type="button">Privacy</button>
-                                        </li>
 
-                                    </ul>
-                                </div>
                             </div>
 
                             <div className="col-lg-3 col-md-6">

@@ -71,7 +71,7 @@ exports.loginUser =
                 return next(new ErrorHandler("Invalid email or password"), 401);
             }
 
-            console.log(user);
+            // console.log(user);
 
             sendToken(user, res, 200, 1);
 

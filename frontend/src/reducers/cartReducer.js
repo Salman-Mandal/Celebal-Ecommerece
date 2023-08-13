@@ -4,8 +4,13 @@ import {
     SAVE_SHIPPING_INFO,
   } from "../constants/cartConstants";
   
+
   export const cartReducer = (
-    state = { cartItems: [], shippingInfo: {} },
+    state = {cartItems: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [], shippingInfo: localStorage.getItem("shippingInfo")
+    ? JSON.parse(localStorage.getItem("shippingInfo"))
+    : {}},
     action
   ) => {
     switch (action.type) {

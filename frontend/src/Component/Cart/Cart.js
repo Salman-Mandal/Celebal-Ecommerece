@@ -6,6 +6,7 @@ import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
 import { Typography } from "@mui/material";
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Cart = ({ history }) => {
   const dispatch = useDispatch();
@@ -30,10 +31,11 @@ const Cart = ({ history }) => {
 
   const deleteCartItems = (id) => {
     dispatch(removeItemsFromCart(id));
+    toast.success('Successfully Removed!');
   };
 
   const checkoutHandler = () => {
-    navigation("/login?redirect=shipping");
+    navigation("/shipping");
   };
 
   return (
@@ -66,7 +68,8 @@ const Cart = ({ history }) => {
                     >
                       -
                     </button>
-                    <input type="number" value={item.quantity} readOnly />
+                    {/* <input type="number" value={item.quantity} readOnly /> */}
+                    <p>{item.quantity} </p>
                     <button
                       onClick={() =>
                         increaseQuantity(
@@ -79,9 +82,8 @@ const Cart = ({ history }) => {
                       +
                     </button>
                   </div>
-                  <p className="cartSubtotal">{`₹${
-                    item.price * item.quantity
-                  }`}</p>
+                  <p className="cartSubtotal">{`₹${item.price * item.quantity
+                    }`}</p>
                 </div>
               ))}
 
@@ -102,6 +104,7 @@ const Cart = ({ history }) => {
           </div>
         </Fragment>
       )}
+      <Toaster />
     </Fragment>
   );
 };

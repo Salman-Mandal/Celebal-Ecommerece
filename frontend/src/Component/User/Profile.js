@@ -60,12 +60,12 @@ const Profile = ({ history }) => {
               <div>
                 <Link to="/orders">My Orders</Link>
                 <Link to="/password/update">Change Password</Link>
-                <button id="BTN" onClick={alertTest}>CCCCCCCCCCCCCCCCC</button>
+
               </div>
 
             </div>
           </div>
-          <button id="BTN" onClick={alertTest}>CCCCCCCCCCCCCCCCC</button>
+
           <ToastContainer
             position="top-center"
             autoClose={5000}

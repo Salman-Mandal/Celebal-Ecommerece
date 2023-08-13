@@ -67,6 +67,7 @@ export const loadUser = () => async (dispatch) => {
 
     const token = Cookies.get("token"); // Retrieve the token from cookies
 
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`, // Include the token in the headers

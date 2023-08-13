@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 import "./LoginSignUp.css";
 import Loader from "../layout/Loader/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MailIcon from '@mui/icons-material/Mail';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FaceIcon from '@mui/icons-material/Face';
@@ -9,10 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearError, login, register } from '../../actions/userActions';
 import toast, { Toaster } from 'react-hot-toast';
 
-const LoginSignUp = ({ location }) => {
+const LoginSignUp = ({ }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { error, loading, isLoggedIn } = useSelector((state) => state.user);
+    const location = useLocation();
 
     const loginTab = useRef(null);
     const registerTab = useRef(null);
@@ -66,20 +67,18 @@ const LoginSignUp = ({ location }) => {
         }
     };
 
+    // const redirect = location.search ? location.search.split("=")[1] : "/account";
+
+
     useEffect(() => {
-        if (error) {
-            console.log(error);
-            toast.error(error);
-
-            dispatch(clearError());
-        }
-
         if (isLoggedIn) {
-            console.log("logged in");
-            toast.success('Successfully toasted!');
-            navigate("/");
+            if (location.pathname === "/cart") {
+                navigate("/cart");
+            } else {
+                navigate("/account");
+            }
         }
-    }, [dispatch, error, isLoggedIn]);
+    }, [dispatch, error, isLoggedIn, navigate, location]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {

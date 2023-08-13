@@ -31,7 +31,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate(); // Use useNavigate hook to access the navigate function
 
-  const logOutHandler=async (e) => {
+  const logOutHandler = async (e) => {
     e.preventDefault();
     await Cookies.remove('token')
     await dispatch(loadUser);
@@ -175,9 +175,7 @@ function Header() {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))} */}
-              <MenuItem key="Profile" onClick={() => navigate(`/profile`)}>
-                <Typography textAlign="center">Profile</Typography>
-              </MenuItem>
+
 
               <MenuItem key="Account" onClick={() => navigate(`/account`)}>
                 <Typography textAlign="center">Account</Typography>
